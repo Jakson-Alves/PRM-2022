@@ -1,3 +1,4 @@
+import { Product } from './../entity/Product';
 import { Category } from './../entity/Category';
 import { Request, Response } from "express";
 import { TypeORMError } from 'typeorm';
@@ -86,10 +87,15 @@ class CategoryController {
             }
 
             //Atualizo com os novos dados
-            const category = await Category.update(found.id, request.body);
+            await Category.update(found.id, request.body);
+
+            const novo = request.body;
+
+            //Altero o ID pra o que veio no request
+            novo.id = found.id;
 
             //Retorna a entidade encontrada
-            return response.json(category);
+            return response.json(novo);
 
         } catch (e) {
             const error = e as TypeORMError;
