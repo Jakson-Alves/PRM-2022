@@ -14,7 +14,7 @@ export class Product extends BaseEntity {
     @Column('text', {nullable: true})//Faz com que caiba mais de 255 caracteres
     description: string;
     
-    @Column({nullable: false})
+    @Column('decimal',{nullable: false, precision: 10, scale: 2})
     price: number;
 
     @Column({nullable: false, length: 1})

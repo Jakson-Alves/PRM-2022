@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3300;
 app.use(cors());
 
 //Rotas do proxy
-app.use('//backoffice', createProxyMiddleware({
+app.use('/backoffice', createProxyMiddleware({
     target: 'htpp://localhost:3301'
 }))
 
