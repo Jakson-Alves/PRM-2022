@@ -1,3 +1,4 @@
+import { IBrand } from '@typesCustom';
 import { ICredential } from '@typesCustom';
 import axios, { AxiosError } from "axios";
 
@@ -11,6 +12,9 @@ const _BACKOFFICE = '/backoffice';
 
 // Método Brands
 const listBrands = () => (api.get(`${_BACKOFFICE}/brands`));
+const createBrand = (brand: IBrand) => (api.post(`${_BACKOFFICE}/brands`, brand));
+const updateBrand = (brand: IBrand) => (api.put(`${_BACKOFFICE}/brands/${brand.id}`, brand));
+const deleteBrand = (brand: IBrand) => (api.delete(`${_BACKOFFICE}/brands/${brand.id}`));
 
 //Criando método Account
 const signInAdmin = async (credential: ICredential) => {
@@ -33,5 +37,8 @@ const signInAdmin = async (credential: ICredential) => {
 
 export {
     listBrands,
-    signInAdmin 
+    signInAdmin,
+    createBrand,
+    updateBrand,
+    deleteBrand
 }
