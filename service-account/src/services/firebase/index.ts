@@ -23,15 +23,29 @@ const signInAdmin = (email: string, password: string) => (signInWithEmailAndPass
 
 //Usuarios
 const listUsers = () => admin.auth().listUsers(1000);
-const createUser = (user: IUser) => (admin.auth().createUser({
-  email: user.email,
-  emailVerified: true,
-  password: user.password,
-  displayName: user.name,
-  disabled: false
-}));
+
+const createUser = async (user: IUser) => {
+
+  const result = await admin.auth().createUser({
+      email: user.email,
+      emailVerified: true,
+      password: user.password,
+      displayName: user.name,
+      disabled: false
+      })
+      console.log(result);
+      
+      admin.auth().setCustomUserClaims(result.uid, {customer: true});
+  };
+
+
+//usuario CLIENTES
+const createUserCustomer = (user: IUser) => {
+  return createUser(user);
+}
+
 const getUser = (uid: string) => admin.auth().getUser(uid);
 const updateUser = (uid: string, data: any) => admin.auth().updateUser(uid, data);
 const deleteUser = (uid: string) => admin.auth().deleteUser(uid);
 
-export { FirebaseError, signInAdmin, listUsers, createUser, getUser, updateUser, deleteUser }
+export { FirebaseError, signInAdmin, listUsers, createUser, getUser, updateUser, deleteUser, createUserCustomer }

@@ -1,7 +1,8 @@
 import { IUser } from '@typesCustom';
 
 import { Request, Response } from "express";
-import { createUser, deleteUser, FirebaseError, getUser, listUsers, updateUser } from "../services/firebase";
+import { sendToQueue } from '../services/amqp';
+import { createUser, createUserCustomer, deleteUser, FirebaseError, getUser, listUsers, updateUser } from "../services/firebase";
 
 class AccountController {
 
@@ -49,6 +50,36 @@ class AccountController {
                 name: result.displayName || '',
                 email: result.email || ''
             }
+
+            //Retorno o objeto inserido
+            return response.status(201).json(newUser);
+
+        } catch (e) {
+            const error = e as FirebaseError;
+            return response.status(500).json({message: error.message})
+        }
+     }
+
+     //Adiciono um usuario 
+     public async createUserLikeCustomer(request: Request, response: Response) {        
+        const {user, customer } = request.body;
+
+        try { 
+
+            //Cria um novo usuário bo firebase
+            const result = await createUserCustomer(user);
+
+            //Prepara o retorno
+            const newUser: IUser = {
+                uid: result.uid,
+                name: result.displayName || '',
+                email: result.email || ''
+            }
+
+            //TO-DO Enviar usuário para a fila
+            //Prepara o cliente para ser enviado a fila
+            customer.uid = result.uid;
+            await sendToQueue(JSON.stringify(customer));
 
             //Retorno o objeto inserido
             return response.status(201).json(newUser);
