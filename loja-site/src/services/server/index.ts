@@ -57,7 +57,12 @@ const signIn = async (credential: ICredential) => {
     } catch (e) {
         const error: AxiosError = e as AxiosError;
         return new Promise<IUser>((resolve, reject) => {
-            reject({ status: error.response?.status, message: error.response?.data });
+            if (error.response?.status === 403) {
+                reject({ code: 'auth/not-authorized', message: error.response?.data });
+            } else {
+                reject({ status: error.response?.status, message: error.response?.data });
+            }
+            
         });
     }
 }

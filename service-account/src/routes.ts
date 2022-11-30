@@ -5,7 +5,7 @@ import AuthController from './controller/AuthController';
 const routes = Router();
 
 routes.post('/admin/signin', AuthController.signInAdmin);
-routes.post('/loja/signin', AuthController.signInAdmin); //TO-DO: Mudar para um método próprio
+routes.post('/loja/signin', AuthController.signInLoja); //TO-DO: Mudar para um método próprio
 
 //Rotas da Loja Admin
 routes.route('/admin/users')

@@ -41,7 +41,7 @@ class AccountController {
 
         try { 
 
-            //Cria um novo usuário bo firebase
+            //Cria um novo usuário no firebase
             const result = await createUser(user);
 
             //Prepara o retorno
@@ -67,7 +67,7 @@ class AccountController {
         try { 
 
             //Cria um novo usuário bo firebase
-            const result = await createUserCustomer(user);
+            const result = await createUserCustomer(user) as any
 
             //Prepara o retorno
             const newUser: IUser = {
@@ -121,7 +121,7 @@ class AccountController {
          }
       }
 
-     //Atuaslizo um marca
+     //Atualizo um marca
      public async update(request: Request, response: Response) {
 
         try {
