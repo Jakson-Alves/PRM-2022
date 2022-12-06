@@ -1,4 +1,4 @@
-import { IOrder, ICredential, ICustomer, ICategory, IProduct, IUser } from '@typesCustom';
+import { IOrder , ICredential, ICustomer, ICategory, IProduct, IUser } from '@typesCustom';
 import axios, { AxiosError } from 'axios';
 
 const api = axios.create({
